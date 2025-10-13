@@ -4,6 +4,7 @@ const Index = () => {
   const [isFlashing, setIsFlashing] = useState(false);
   const [volume, setVolume] = useState(0.5);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const snowflakes = useMemo(() => {
@@ -100,13 +101,27 @@ const Index = () => {
       `}</style>
       
       <div className="absolute top-8 left-8 z-20">
-        <a 
-          href="#"
+        <button 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
           className="bg-[#CE422B] hover:bg-[#A03522] text-white font-bold px-6 py-3 rounded-lg transition-all hover:scale-105 drop-shadow-lg"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
         >
           ССЫЛКИ
-        </a>
+        </button>
+        
+        {isMenuOpen && (
+          <div className="absolute top-16 left-0 bg-black/80 backdrop-blur-sm rounded-lg overflow-hidden drop-shadow-2xl min-w-[250px]">
+            <a
+              href="https://www.youtube.com/@markofin_cheats"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-6 py-4 text-white hover:bg-[#CE422B] transition-colors font-semibold"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              YOUTUBE
+            </a>
+          </div>
+        )}
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center gap-20">
