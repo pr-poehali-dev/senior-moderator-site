@@ -46,9 +46,11 @@ const Index = () => {
   }, [volume]);
 
   const playRocketSound = () => {
-    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
-    audio.volume = 0.6;
-    audio.play().catch(err => console.log('Audio play failed:', err));
+    if (isPlaying) {
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
+      audio.volume = 0.6;
+      audio.play().catch(err => console.log('Audio play failed:', err));
+    }
     
     setIsFlashing(true);
     setTimeout(() => setIsFlashing(false), 300);
