@@ -134,12 +134,20 @@ const Index = () => {
       </div>
 
       <div className="relative z-10 flex flex-col items-center justify-center gap-20">
-        <p 
-          className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
-          style={{ fontFamily: 'Montserrat, sans-serif' }}
-        >
-          CHEATERS ARE BAD
-        </p>
+        <div className="flex flex-col items-center gap-4">
+          <p 
+            className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            Путь до Модерки
+          </p>
+          <p 
+            className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            CHEATERS ARE BAD
+          </p>
+        </div>
         
         <div 
           className="flex flex-col items-center gap-2 cursor-pointer select-none transition-transform hover:scale-105 active:scale-95"
