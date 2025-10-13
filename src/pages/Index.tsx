@@ -1,7 +1,7 @@
 const Index = () => {
   const playRocketSound = () => {
-    const audio = new Audio('https://cdn.poehali.dev/files/50deea39-8a1a-4189-ac12-3da18238a504.jpg');
-    audio.volume = 0.5;
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
+    audio.volume = 0.6;
     audio.play().catch(err => console.log('Audio play failed:', err));
   };
 
