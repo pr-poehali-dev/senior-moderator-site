@@ -1,19 +1,20 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 
 const Index = () => {
   const [isFlashing, setIsFlashing] = useState(false);
-  const [snowflakes, setSnowflakes] = useState<Array<{id: number, left: number, delay: number, duration: number}>>([]);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    const flakes = Array.from({ length: 50 }, (_, i) => ({
+  const snowflakes = useMemo(() => {
+    return Array.from({ length: 50 }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
       delay: Math.random() * 5,
       duration: 5 + Math.random() * 10
     }));
-    setSnowflakes(flakes);
+  }, []);
+
+  useEffect(() => {
 
     const bgAudio = new Audio('https://cdn.pixabay.com/audio/2022/11/23/audio_97983ba9f5.mp3');
     bgAudio.loop = true;
