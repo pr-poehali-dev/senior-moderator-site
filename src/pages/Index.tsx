@@ -17,12 +17,20 @@ const Index = () => {
           />
         </div>
         
-        <h1 
-          className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
-          style={{ fontFamily: 'Montserrat, sans-serif' }}
-        >
-          SENIORMODERATOR
-        </h1>
+        <div className="flex flex-col items-center gap-2">
+          <h1 
+            className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            SENIOR
+          </h1>
+          <h2 
+            className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            MODERATOR
+          </h2>
+        </div>
       </div>
     </div>
   );
