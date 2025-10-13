@@ -99,6 +99,16 @@ const Index = () => {
         }
       `}</style>
       
+      <div className="absolute top-8 left-8 z-20">
+        <a 
+          href="#"
+          className="bg-[#CE422B] hover:bg-[#A03522] text-white font-bold px-6 py-3 rounded-lg transition-all hover:scale-105 drop-shadow-lg"
+          style={{ fontFamily: 'Montserrat, sans-serif' }}
+        >
+          ССЫЛКИ
+        </a>
+      </div>
+
       <div className="relative z-10 flex flex-col items-center justify-center gap-20">
         <p 
           className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
