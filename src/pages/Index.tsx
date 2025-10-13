@@ -1,4 +1,10 @@
 const Index = () => {
+  const playRocketSound = () => {
+    const audio = new Audio('https://cdn.poehali.dev/files/50deea39-8a1a-4189-ac12-3da18238a504.jpg');
+    audio.volume = 0.5;
+    audio.play().catch(err => console.log('Audio play failed:', err));
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <div 
@@ -9,7 +15,10 @@ const Index = () => {
       />
       
       <div className="relative z-10 flex flex-col items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
+        <div 
+          className="flex flex-col items-center gap-2 cursor-pointer select-none transition-transform hover:scale-105 active:scale-95"
+          onClick={playRocketSound}
+        >
           <h1 
             className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
