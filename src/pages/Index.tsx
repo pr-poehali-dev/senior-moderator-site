@@ -16,12 +16,19 @@ const Index = () => {
           >
             SENIOR
           </h1>
-          <h2 
-            className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
-            style={{ fontFamily: 'Montserrat, sans-serif' }}
-          >
-            MODERATOR
-          </h2>
+          <div className="flex items-center gap-4">
+            <h2 
+              className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              MODERATOR
+            </h2>
+            <img 
+              src="https://cdn.poehali.dev/files/50deea39-8a1a-4189-ac12-3da18238a504.jpg" 
+              alt="Rust Logo"
+              className="w-20 h-20 object-contain drop-shadow-2xl"
+            />
+          </div>
         </div>
       </div>
     </div>
