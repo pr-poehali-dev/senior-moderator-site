@@ -66,7 +66,7 @@ const Index = () => {
         }
       `}</style>
       
-      <div className="relative z-10 flex flex-col items-center justify-center gap-12">
+      <div className="relative z-10 flex flex-col items-center justify-center gap-20">
         <p 
           className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
           style={{ fontFamily: 'Montserrat, sans-serif' }}
