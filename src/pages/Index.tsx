@@ -1,18 +1,35 @@
+import { useState } from 'react';
+
 const Index = () => {
+  const [isFlashing, setIsFlashing] = useState(false);
+
   const playRocketSound = () => {
     const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
     audio.volume = 0.6;
     audio.play().catch(err => console.log('Audio play failed:', err));
+    
+    setIsFlashing(true);
+    setTimeout(() => setIsFlashing(false), 300);
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 transition-opacity duration-300"
         style={{
           background: 'linear-gradient(135deg, #CE422B 0%, #1A1A1A 50%, #884513 100%)',
+          opacity: isFlashing ? 0.3 : 1,
         }}
       />
+      
+      {isFlashing && (
+        <div 
+          className="absolute inset-0 z-0 animate-pulse"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,140,0,0.8) 0%, rgba(206,66,43,0.4) 50%, transparent 100%)',
+          }}
+        />
+      )}
       
       <div className="relative z-10 flex flex-col items-center justify-center">
         <div 
