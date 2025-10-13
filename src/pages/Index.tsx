@@ -131,26 +131,13 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-4 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full">
         <button 
           onClick={toggleMusic}
-          className="text-white text-xl hover:scale-110 transition-transform"
+          className="text-white text-2xl hover:scale-110 transition-transform"
         >
           {isPlaying ? '🔊' : '🔇'}
         </button>
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={(e) => setVolume(parseFloat(e.target.value))}
-          className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
-          style={{
-            background: `linear-gradient(to right, #CE422B 0%, #CE422B ${volume * 100}%, #4a4a4a ${volume * 100}%, #4a4a4a 100%)`
-          }}
-        />
-        <span className="text-white text-sm">{Math.round(volume * 100)}%</span>
       </div>
     </div>
   );
