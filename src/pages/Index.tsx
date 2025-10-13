@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const Index = () => {
   const [isFlashing, setIsFlashing] = useState(false);
   const [snowflakes, setSnowflakes] = useState<Array<{id: number, left: number, delay: number, duration: number}>>([]);
+  const [volume, setVolume] = useState(0.5);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const flakes = Array.from({ length: 50 }, (_, i) => ({
@@ -12,7 +14,25 @@ const Index = () => {
       duration: 5 + Math.random() * 10
     }));
     setSnowflakes(flakes);
+
+    const bgAudio = new Audio('https://cdn.pixabay.com/audio/2022/11/23/audio_97983ba9f5.mp3');
+    bgAudio.loop = true;
+    bgAudio.volume = 0.5;
+    bgAudio.play().catch(err => console.log('Background music play failed:', err));
+    audioRef.current = bgAudio;
+
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+    };
   }, []);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   const playRocketSound = () => {
     const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
@@ -98,6 +118,23 @@ const Index = () => {
             />
           </div>
         </div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 flex items-center gap-4 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full">
+        <span className="text-white text-sm">🔊</span>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={(e) => setVolume(parseFloat(e.target.value))}
+          className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer"
+          style={{
+            background: `linear-gradient(to right, #CE422B 0%, #CE422B ${volume * 100}%, #4a4a4a ${volume * 100}%, #4a4a4a 100%)`
+          }}
+        />
+        <span className="text-white text-sm">{Math.round(volume * 100)}%</span>
       </div>
     </div>
   );
