@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Index = () => {
   const [isFlashing, setIsFlashing] = useState(false);
+  const [snowflakes, setSnowflakes] = useState<Array<{id: number, left: number, delay: number, duration: number}>>([]);
+
+  useEffect(() => {
+    const flakes = Array.from({ length: 50 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 5,
+      duration: 5 + Math.random() * 10
+    }));
+    setSnowflakes(flakes);
+  }, []);
 
   const playRocketSound = () => {
     const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
@@ -30,6 +41,30 @@ const Index = () => {
           }}
         />
       )}
+
+      {snowflakes.map((flake) => (
+        <div
+          key={flake.id}
+          className="absolute text-white opacity-70 pointer-events-none"
+          style={{
+            left: `${flake.left}%`,
+            top: '-10px',
+            animation: `fall ${flake.duration}s linear infinite`,
+            animationDelay: `${flake.delay}s`,
+            fontSize: `${Math.random() * 10 + 10}px`,
+          }}
+        >
+          ❄
+        </div>
+      ))}
+
+      <style>{`
+        @keyframes fall {
+          to {
+            transform: translateY(100vh) translateX(${Math.random() * 100 - 50}px);
+          }
+        }
+      `}</style>
       
       <div className="relative z-10 flex flex-col items-center justify-center">
         <div 
