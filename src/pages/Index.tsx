@@ -17,6 +17,10 @@ const Index = () => {
     const nextIndex = (currentIndex + 1) % colors.length;
     setModerkiColor(colors[nextIndex]);
     
+    setTimeout(() => {
+      setModerkiColor('#E8E8E8');
+    }, 2000);
+    
     const newCount = clickCount + 1;
     setClickCount(newCount);
     
