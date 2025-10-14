@@ -6,6 +6,15 @@ const Index = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [moderkiColor, setModerkiColor] = useState('#E8E8E8');
+
+  const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
+  
+  const changeModerkiColor = () => {
+    const currentIndex = colors.indexOf(moderkiColor);
+    const nextIndex = (currentIndex + 1) % colors.length;
+    setModerkiColor(colors[nextIndex]);
+  };
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const snowflakes = useMemo(() => {
@@ -154,7 +163,14 @@ const Index = () => {
             className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
-            Путь до Модерки
+            Путь до{' '}
+            <button
+              onClick={changeModerkiColor}
+              className="hover:scale-105 transition-transform cursor-pointer"
+              style={{ color: moderkiColor }}
+            >
+              Модерки
+            </button>
           </p>
           <p 
             className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
