@@ -207,8 +207,14 @@ const Index = () => {
 
       {isAboutOpen && (
         <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 bg-black/90 backdrop-blur-sm rounded-lg p-6 max-w-md drop-shadow-2xl">
+          <button 
+            onClick={() => setIsAboutOpen(false)}
+            className="absolute top-2 right-2 text-white text-xl hover:scale-110 transition-transform"
+          >
+            ✕
+          </button>
           <p 
-            className="text-white text-lg leading-relaxed"
+            className="text-white text-lg leading-relaxed pr-6"
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             Я Senior Moderator Александр, мне 17 лет. Играю в игру RUST на проекте СompanyRust и хочу стать там администратором.
