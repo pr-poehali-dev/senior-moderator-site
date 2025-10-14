@@ -7,6 +7,8 @@ const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAboutOpen, setIsAboutOpen] = useState(false);
   const [moderkiColor, setModerkiColor] = useState('#E8E8E8');
+  const [clickCount, setClickCount] = useState(0);
+  const [isRainbowMode, setIsRainbowMode] = useState(false);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
   
@@ -14,6 +16,14 @@ const Index = () => {
     const currentIndex = colors.indexOf(moderkiColor);
     const nextIndex = (currentIndex + 1) % colors.length;
     setModerkiColor(colors[nextIndex]);
+    
+    const newCount = clickCount + 1;
+    setClickCount(newCount);
+    
+    if (newCount === 3) {
+      setIsRainbowMode(true);
+      setClickCount(0);
+    }
   };
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -122,6 +132,10 @@ const Index = () => {
         .rainbow-text {
           animation: rainbow 3s linear infinite;
         }
+        
+        .rainbow-fast {
+          animation: rainbow 0.5s linear infinite;
+        }
       `}</style>
       
       <div className="absolute top-8 left-8 z-20">
@@ -160,20 +174,20 @@ const Index = () => {
       <div className="relative z-10 flex flex-col items-center justify-center gap-20">
         <div className="flex flex-col items-center gap-4">
           <p 
-            className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
+            className={`text-2xl font-bold tracking-wide drop-shadow-lg ${isRainbowMode ? 'rainbow-fast' : 'text-[#E8E8E8]'}`}
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             Путь до{' '}
             <button
               onClick={changeModerkiColor}
               className="hover:scale-105 transition-transform cursor-pointer"
-              style={{ color: moderkiColor }}
+              style={{ color: isRainbowMode ? undefined : moderkiColor }}
             >
               Модерки
             </button>
           </p>
           <p 
-            className="text-2xl font-bold tracking-wide text-[#E8E8E8] drop-shadow-lg"
+            className={`text-2xl font-bold tracking-wide drop-shadow-lg ${isRainbowMode ? 'rainbow-fast' : 'text-[#E8E8E8]'}`}
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             CHEATERS ARE BAD
@@ -185,14 +199,14 @@ const Index = () => {
           onClick={playRocketSound}
         >
           <h1 
-            className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
+            className={`text-7xl font-black tracking-wider drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)] ${isRainbowMode ? 'rainbow-fast' : 'text-[#E8E8E8]'}`}
             style={{ fontFamily: 'Montserrat, sans-serif' }}
           >
             SENIOR
           </h1>
           <div className="flex items-center gap-4">
             <h2 
-              className="text-7xl font-black tracking-wider text-[#E8E8E8] drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)]"
+              className={`text-7xl font-black tracking-wider drop-shadow-[0_4px_20px_rgba(206,66,43,0.5)] ${isRainbowMode ? 'rainbow-fast' : 'text-[#E8E8E8]'}`}
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               MODERATOR
