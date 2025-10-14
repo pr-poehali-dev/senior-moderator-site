@@ -10,8 +10,10 @@ const Index = () => {
   const [clickCount, setClickCount] = useState(0);
   const [isRainbowMode, setIsRainbowMode] = useState(false);
   const [showSnowflakes, setShowSnowflakes] = useState(true);
+  const [clickFlashes, setClickFlashes] = useState<Array<{id: number, x: number, y: number}>>([]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePos = useRef({ x: 0, y: 0 });
+  const flashIdRef = useRef(0);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
   
@@ -178,8 +180,25 @@ const Index = () => {
     setTimeout(() => setIsFlashing(false), 300);
   };
 
+  const handleBackgroundClick = (e: React.MouseEvent) => {
+    const newFlash = {
+      id: flashIdRef.current++,
+      x: e.clientX,
+      y: e.clientY
+    };
+    
+    setClickFlashes(prev => [...prev, newFlash]);
+    
+    setTimeout(() => {
+      setClickFlashes(prev => prev.filter(flash => flash.id !== newFlash.id));
+    }, 800);
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    <div 
+      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      onClick={handleBackgroundClick}
+    >
       <div 
         className="absolute inset-0 z-0"
         style={{
@@ -207,6 +226,21 @@ const Index = () => {
         />
       )}
 
+      {clickFlashes.map(flash => (
+        <div
+          key={flash.id}
+          className="absolute pointer-events-none rounded-full z-10"
+          style={{
+            left: flash.x - 50,
+            top: flash.y - 50,
+            width: '100px',
+            height: '100px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(206,66,43,0.6) 30%, transparent 70%)',
+            animation: 'flashExpand 0.8s ease-out forwards',
+          }}
+        />
+      ))}
+
       {showSnowflakes && snowflakes.map((flake) => (
         <div
           key={flake.id}
@@ -227,6 +261,20 @@ const Index = () => {
         @keyframes fall {
           to {
             transform: translateY(100vh) translateX(${Math.random() * 100 - 50}px);
+          }
+        }
+        
+        @keyframes flashExpand {
+          0% {
+            opacity: 1;
+            transform: scale(0);
+          }
+          50% {
+            opacity: 0.8;
+          }
+          100% {
+            opacity: 0;
+            transform: scale(3);
           }
         }
         
