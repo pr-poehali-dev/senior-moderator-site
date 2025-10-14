@@ -11,6 +11,7 @@ const Index = () => {
   const [isRainbowMode, setIsRainbowMode] = useState(false);
   const [showSnowflakes, setShowSnowflakes] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
   
@@ -91,15 +92,23 @@ const Index = () => {
 
       const waves = 30;
       const spacing = canvas.height / waves;
+      
+      const mouseInfluence = 150;
+      const mouseX = mousePos.current.x;
+      const mouseY = mousePos.current.y;
 
       for (let i = 0; i < waves; i++) {
         ctx.beginPath();
         
         for (let x = 0; x <= canvas.width; x += 5) {
+          const distanceToMouse = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow((canvas.height * 0.2 + i * spacing * 0.3) - mouseY, 2));
+          const mouseEffect = Math.max(0, 1 - distanceToMouse / mouseInfluence) * 80;
+          
           const y = (canvas.height * 0.2) + 
                     Math.sin((x * 0.003) + (i * 0.3) + time) * 80 +
                     Math.sin((x * 0.002) + time * 0.8) * 60 +
-                    (i * spacing * 0.3);
+                    (i * spacing * 0.3) +
+                    mouseEffect * Math.sin(time * 2);
           
           if (x === 0) {
             ctx.moveTo(x, y);
@@ -115,10 +124,14 @@ const Index = () => {
         ctx.beginPath();
         
         for (let x = 0; x <= canvas.width; x += 5) {
+          const distanceToMouse = Math.sqrt(Math.pow(x - mouseX, 2) + Math.pow((canvas.height * 0.6 + i * spacing * 0.25) - mouseY, 2));
+          const mouseEffect = Math.max(0, 1 - distanceToMouse / mouseInfluence) * 80;
+          
           const y = (canvas.height * 0.6) + 
                     Math.sin((x * 0.004) + (i * 0.25) - time * 1.2) * 70 +
                     Math.sin((x * 0.0015) - time) * 50 +
-                    (i * spacing * 0.25);
+                    (i * spacing * 0.25) +
+                    mouseEffect * Math.sin(time * 2);
           
           if (x === 0) {
             ctx.moveTo(x, y);
@@ -136,14 +149,20 @@ const Index = () => {
 
     draw();
 
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY };
+    };
+
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     };
 
+    window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize', handleResize);
 
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
