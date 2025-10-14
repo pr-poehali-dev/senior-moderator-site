@@ -81,30 +81,59 @@ const Index = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const fontSize = 16;
-    const columns = canvas.width / fontSize;
-    const drops: number[] = Array(Math.floor(columns)).fill(1);
-    const chars = '01';
+    let time = 0;
 
     const draw = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      ctx.lineWidth = 1;
 
-      ctx.fillStyle = '#0F0';
-      ctx.font = fontSize + 'px monospace';
+      const waves = 30;
+      const spacing = canvas.height / waves;
 
-      for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
+      for (let i = 0; i < waves; i++) {
+        ctx.beginPath();
+        
+        for (let x = 0; x <= canvas.width; x += 5) {
+          const y = (canvas.height * 0.2) + 
+                    Math.sin((x * 0.003) + (i * 0.3) + time) * 80 +
+                    Math.sin((x * 0.002) + time * 0.8) * 60 +
+                    (i * spacing * 0.3);
+          
+          if (x === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
-        drops[i]++;
+        
+        ctx.stroke();
       }
+
+      for (let i = 0; i < waves; i++) {
+        ctx.beginPath();
+        
+        for (let x = 0; x <= canvas.width; x += 5) {
+          const y = (canvas.height * 0.6) + 
+                    Math.sin((x * 0.004) + (i * 0.25) - time * 1.2) * 70 +
+                    Math.sin((x * 0.0015) - time) * 50 +
+                    (i * spacing * 0.25);
+          
+          if (x === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        
+        ctx.stroke();
+      }
+
+      time += 0.01;
+      requestAnimationFrame(draw);
     };
 
-    const interval = setInterval(draw, 50);
+    draw();
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -114,7 +143,6 @@ const Index = () => {
     window.addEventListener('resize', handleResize);
 
     return () => {
-      clearInterval(interval);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
@@ -132,16 +160,21 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          background: '#0a0a0a',
+        }}
+      />
       <canvas 
         ref={canvasRef}
         className="absolute inset-0 z-0"
-        style={{ opacity: 0.3 }}
       />
       <div 
         className={`absolute inset-0 z-0 transition-opacity duration-300 ${isRainbowMode ? 'rainbow-bg' : ''}`}
         style={{
-          background: isRainbowMode ? undefined : 'linear-gradient(135deg, #CE422B 0%, #1A1A1A 50%, #884513 100%)',
-          opacity: isFlashing ? 0.3 : 0.7,
+          background: isRainbowMode ? undefined : 'radial-gradient(circle at 30% 50%, rgba(206,66,43,0.15) 0%, transparent 50%), radial-gradient(circle at 70% 50%, rgba(136,69,19,0.15) 0%, transparent 50%)',
+          opacity: isFlashing ? 0.3 : 1,
         }}
       />
       
