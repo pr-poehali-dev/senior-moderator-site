@@ -9,7 +9,6 @@ const Index = () => {
   const [moderkiColor, setModerkiColor] = useState('#E8E8E8');
   const [clickCount, setClickCount] = useState(0);
   const [isRainbowMode, setIsRainbowMode] = useState(false);
-  const [trails, setTrails] = useState<Array<{id: number, x: number, y: number}>>([]);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
   
@@ -31,21 +30,6 @@ const Index = () => {
     }
   };
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const trailIdRef = useRef(0);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const newTrail = {
-      id: trailIdRef.current++,
-      x: e.clientX,
-      y: e.clientY
-    };
-    
-    setTrails(prev => [...prev, newTrail]);
-    
-    setTimeout(() => {
-      setTrails(prev => prev.filter(trail => trail.id !== newTrail.id));
-    }, 1000);
-  };
 
   const snowflakes = useMemo(() => {
     return Array.from({ length: 50 }, (_, i) => ({
@@ -98,25 +82,7 @@ const Index = () => {
   };
 
   return (
-    <div 
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
-      onMouseMove={handleMouseMove}
-    >
-      {trails.map(trail => (
-        <div
-          key={trail.id}
-          className="absolute pointer-events-none rounded-full"
-          style={{
-            left: trail.x - 10,
-            top: trail.y - 10,
-            width: '20px',
-            height: '20px',
-            background: 'radial-gradient(circle, rgba(206,66,43,0.6) 0%, transparent 70%)',
-            animation: 'fadeOut 1s ease-out forwards',
-            zIndex: 5
-          }}
-        />
-      ))}
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <div 
         className={`absolute inset-0 z-0 transition-opacity duration-300 ${isRainbowMode ? 'rainbow-bg' : ''}`}
         style={{
@@ -154,17 +120,6 @@ const Index = () => {
         @keyframes fall {
           to {
             transform: translateY(100vh) translateX(${Math.random() * 100 - 50}px);
-          }
-        }
-        
-        @keyframes fadeOut {
-          0% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          100% {
-            opacity: 0;
-            transform: scale(0);
           }
         }
         
