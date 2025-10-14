@@ -41,7 +41,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    const bgAudio = new Audio('https://cdn.pixabay.com/audio/2022/11/23/audio_97983ba9f5.mp3');
+    const bgAudio = new Audio('https://cdn.pixabay.com/audio/2022/03/10/audio_c34dd1eb37.mp3');
     bgAudio.loop = true;
     bgAudio.volume = 0.5;
     audioRef.current = bgAudio;
