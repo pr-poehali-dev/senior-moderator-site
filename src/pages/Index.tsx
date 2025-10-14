@@ -98,6 +98,20 @@ const Index = () => {
             transform: translateY(100vh) translateX(${Math.random() * 100 - 50}px);
           }
         }
+        
+        @keyframes rainbow {
+          0% { color: #ff0000; }
+          16.66% { color: #ff7f00; }
+          33.33% { color: #ffff00; }
+          50% { color: #00ff00; }
+          66.66% { color: #0000ff; }
+          83.33% { color: #8b00ff; }
+          100% { color: #ff0000; }
+        }
+        
+        .rainbow-text {
+          animation: rainbow 3s linear infinite;
+        }
       `}</style>
       
       <div className="absolute top-8 left-8 z-20">
@@ -115,7 +129,7 @@ const Index = () => {
               href="https://www.youtube.com/@markofin_cheats"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-6 py-4 text-white hover:bg-[#CE422B] transition-colors font-semibold"
+              className="block px-6 py-4 hover:bg-[#CE422B] transition-colors font-semibold rainbow-text"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               YOUTUBE
@@ -124,7 +138,7 @@ const Index = () => {
               href="https://discord.gg/PkBhywnB"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-6 py-4 text-white hover:bg-[#CE422B] transition-colors font-semibold"
+              className="block px-6 py-4 hover:bg-[#CE422B] transition-colors font-semibold rainbow-text"
               style={{ fontFamily: 'Montserrat, sans-serif' }}
             >
               DISCORD
