@@ -173,6 +173,15 @@ const Index = () => {
 
       <div className="relative z-10 flex flex-col items-center justify-center gap-20">
         <div className="flex flex-col items-center gap-4">
+          {isRainbowMode && (
+            <button
+              onClick={() => setIsRainbowMode(false)}
+              className="bg-[#CE422B] hover:bg-[#A03522] text-white font-bold px-6 py-2 rounded-lg transition-all hover:scale-105 drop-shadow-lg"
+              style={{ fontFamily: 'Montserrat, sans-serif' }}
+            >
+              Отключить RGB
+            </button>
+          )}
           <p 
             className={`text-2xl font-bold tracking-wide drop-shadow-lg ${isRainbowMode ? 'rainbow-fast' : 'text-[#E8E8E8]'}`}
             style={{ fontFamily: 'Montserrat, sans-serif' }}
