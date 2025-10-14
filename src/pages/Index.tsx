@@ -189,12 +189,17 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20 bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full flex items-center gap-4">
         <button 
           onClick={toggleMusic}
           className="text-white text-2xl hover:scale-110 transition-transform"
         >
           {isPlaying ? '🔊' : '🔇'}
+        </button>
+        <button 
+          className="text-white text-2xl hover:scale-110 transition-transform"
+        >
+          ❓
         </button>
       </div>
     </div>
