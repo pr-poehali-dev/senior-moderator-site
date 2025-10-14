@@ -5,6 +5,7 @@ const Index = () => {
   const [volume, setVolume] = useState(0.5);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const snowflakes = useMemo(() => {
@@ -197,11 +198,23 @@ const Index = () => {
           {isPlaying ? '🔊' : '🔇'}
         </button>
         <button 
+          onClick={() => setIsAboutOpen(!isAboutOpen)}
           className="text-white text-2xl hover:scale-110 transition-transform"
         >
           ❓
         </button>
       </div>
+
+      {isAboutOpen && (
+        <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 bg-black/90 backdrop-blur-sm rounded-lg p-6 max-w-md drop-shadow-2xl">
+          <p 
+            className="text-white text-lg leading-relaxed"
+            style={{ fontFamily: 'Montserrat, sans-serif' }}
+          >
+            Я Senior Moderator Александр, мне 17 лет. Играю в игру RUST на проекте СompanyRust и хочу стать там администратором.
+          </p>
+        </div>
+      )}
     </div>
   );
 };
