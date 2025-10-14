@@ -84,9 +84,9 @@ const Index = () => {
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
       <div 
-        className="absolute inset-0 z-0 transition-opacity duration-300"
+        className={`absolute inset-0 z-0 transition-opacity duration-300 ${isRainbowMode ? 'rainbow-bg' : ''}`}
         style={{
-          background: 'linear-gradient(135deg, #CE422B 0%, #1A1A1A 50%, #884513 100%)',
+          background: isRainbowMode ? undefined : 'linear-gradient(135deg, #CE422B 0%, #1A1A1A 50%, #884513 100%)',
           opacity: isFlashing ? 0.3 : 1,
         }}
       />
@@ -133,12 +133,26 @@ const Index = () => {
           100% { color: #ff0000; }
         }
         
+        @keyframes rainbowBg {
+          0% { background: linear-gradient(135deg, #ff0000 0%, #1A1A1A 50%, #ff7f00 100%); }
+          16.66% { background: linear-gradient(135deg, #ff7f00 0%, #1A1A1A 50%, #ffff00 100%); }
+          33.33% { background: linear-gradient(135deg, #ffff00 0%, #1A1A1A 50%, #00ff00 100%); }
+          50% { background: linear-gradient(135deg, #00ff00 0%, #1A1A1A 50%, #0000ff 100%); }
+          66.66% { background: linear-gradient(135deg, #0000ff 0%, #1A1A1A 50%, #8b00ff 100%); }
+          83.33% { background: linear-gradient(135deg, #8b00ff 0%, #1A1A1A 50%, #ff0000 100%); }
+          100% { background: linear-gradient(135deg, #ff0000 0%, #1A1A1A 50%, #ff7f00 100%); }
+        }
+        
         .rainbow-text {
           animation: rainbow 3s linear infinite;
         }
         
         .rainbow-fast {
           animation: rainbow 0.5s linear infinite;
+        }
+        
+        .rainbow-bg {
+          animation: rainbowBg 1s linear infinite;
         }
       `}</style>
       
