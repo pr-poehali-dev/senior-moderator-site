@@ -9,6 +9,7 @@ const Index = () => {
   const [moderkiColor, setModerkiColor] = useState('#E8E8E8');
   const [clickCount, setClickCount] = useState(0);
   const [isRainbowMode, setIsRainbowMode] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
   
@@ -70,6 +71,54 @@ const Index = () => {
     }
   }, [volume]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops: number[] = Array(Math.floor(columns)).fill(1);
+    const chars = '01';
+
+    const draw = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0F0';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    };
+
+    const interval = setInterval(draw, 50);
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const playRocketSound = () => {
     if (isPlaying) {
       const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2158/2158-preview.mp3');
@@ -83,11 +132,16 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+      <canvas 
+        ref={canvasRef}
+        className="absolute inset-0 z-0"
+        style={{ opacity: 0.3 }}
+      />
       <div 
         className={`absolute inset-0 z-0 transition-opacity duration-300 ${isRainbowMode ? 'rainbow-bg' : ''}`}
         style={{
           background: isRainbowMode ? undefined : 'linear-gradient(135deg, #CE422B 0%, #1A1A1A 50%, #884513 100%)',
-          opacity: isFlashing ? 0.3 : 1,
+          opacity: isFlashing ? 0.3 : 0.7,
         }}
       />
       
