@@ -9,6 +9,7 @@ const Index = () => {
   const [moderkiColor, setModerkiColor] = useState('#E8E8E8');
   const [clickCount, setClickCount] = useState(0);
   const [isRainbowMode, setIsRainbowMode] = useState(false);
+  const [showSnowflakes, setShowSnowflakes] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
@@ -187,7 +188,7 @@ const Index = () => {
         />
       )}
 
-      {snowflakes.map((flake) => (
+      {showSnowflakes && snowflakes.map((flake) => (
         <div
           key={flake.id}
           className="absolute text-white opacity-70 pointer-events-none"
@@ -340,6 +341,12 @@ const Index = () => {
           className="text-white text-2xl hover:scale-110 transition-transform"
         >
           {isPlaying ? '🔊' : '🔇'}
+        </button>
+        <button 
+          onClick={() => setShowSnowflakes(!showSnowflakes)}
+          className="text-white text-2xl hover:scale-110 transition-transform"
+        >
+          {showSnowflakes ? '❄️' : '🚫'}
         </button>
         <button 
           onClick={() => setIsAboutOpen(!isAboutOpen)}
