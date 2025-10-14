@@ -296,7 +296,7 @@ const Index = () => {
             <button
               onClick={changeModerkiColor}
               className="hover:scale-105 transition-transform cursor-pointer"
-              style={{ color: isRainbowMode ? undefined : moderkiColor }}
+              style={{ color: isRainbowMode ? undefined : '#00BFFF' }}
             >
               Модерки
             </button>
