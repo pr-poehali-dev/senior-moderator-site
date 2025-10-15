@@ -10,6 +10,7 @@ const Index = () => {
   const [clickCount, setClickCount] = useState(0);
   const [isRainbowMode, setIsRainbowMode] = useState(false);
   const [showSnowflakes, setShowSnowflakes] = useState(true);
+  const [isOptimized, setIsOptimized] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
@@ -34,13 +35,14 @@ const Index = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const snowflakes = useMemo(() => {
-    return Array.from({ length: 50 }, (_, i) => ({
+    const count = isOptimized ? 20 : 50;
+    return Array.from({ length: count }, (_, i) => ({
       id: i,
       left: Math.random() * 100,
       delay: Math.random() * 5,
       duration: 5 + Math.random() * 10
     }));
-  }, []);
+  }, [isOptimized]);
 
   useEffect(() => {
     const bgAudio = new Audio('https://cdn.pixabay.com/audio/2022/03/10/audio_c34dd1eb37.mp3');
@@ -89,13 +91,14 @@ const Index = () => {
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.lineWidth = 1;
 
-      const waves = 30;
+      const waves = isOptimized ? 15 : 30;
       const spacing = canvas.height / waves;
+      const step = isOptimized ? 10 : 5;
 
       for (let i = 0; i < waves; i++) {
         ctx.beginPath();
         
-        for (let x = 0; x <= canvas.width; x += 5) {
+        for (let x = 0; x <= canvas.width; x += step) {
           const y = (canvas.height * 0.2) + 
                     Math.sin((x * 0.003) + (i * 0.3) + time) * 80 +
                     Math.sin((x * 0.002) + time * 0.8) * 60 +
@@ -114,7 +117,7 @@ const Index = () => {
       for (let i = 0; i < waves; i++) {
         ctx.beginPath();
         
-        for (let x = 0; x <= canvas.width; x += 5) {
+        for (let x = 0; x <= canvas.width; x += step) {
           const y = (canvas.height * 0.6) + 
                     Math.sin((x * 0.004) + (i * 0.25) - time * 1.2) * 70 +
                     Math.sin((x * 0.0015) - time) * 50 +
@@ -146,7 +149,7 @@ const Index = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isOptimized]);
 
   const playRocketSound = () => {
     if (isPlaying) {
@@ -353,6 +356,13 @@ const Index = () => {
           className="text-white text-2xl hover:scale-110 transition-transform"
         >
           ❓
+        </button>
+        <button 
+          onClick={() => setIsOptimized(!isOptimized)}
+          className="text-white text-2xl hover:scale-110 transition-transform"
+          title={isOptimized ? 'Режим оптимизации включен' : 'Режим оптимизации выключен'}
+        >
+          {isOptimized ? '⚡' : '🐌'}
         </button>
       </div>
 
