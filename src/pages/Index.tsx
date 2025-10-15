@@ -362,7 +362,7 @@ const Index = () => {
           className="text-white text-2xl hover:scale-110 transition-transform"
           title={isOptimized ? 'Режим оптимизации включен' : 'Режим оптимизации выключен'}
         >
-          {isOptimized ? '⚡' : '🐌'}
+          {isOptimized ? '🐌' : '⚡'}
         </button>
       </div>
 
