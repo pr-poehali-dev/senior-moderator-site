@@ -11,6 +11,8 @@ const Index = () => {
   const [isRainbowMode, setIsRainbowMode] = useState(false);
   const [showSnowflakes, setShowSnowflakes] = useState(true);
   const [isOptimized, setIsOptimized] = useState(false);
+  const [showFPS, setShowFPS] = useState(false);
+  const [fps, setFps] = useState(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const colors = ['#E8E8E8', '#CE422B', '#884513', '#FF8C00', '#FFD700', '#00FF00', '#00BFFF', '#FF00FF'];
@@ -85,8 +87,21 @@ const Index = () => {
     canvas.height = window.innerHeight;
 
     let time = 0;
+    let lastTime = performance.now();
+    let frameCount = 0;
+    let fpsUpdateTime = performance.now();
 
     const draw = () => {
+      const currentTime = performance.now();
+      frameCount++;
+      
+      if (currentTime - fpsUpdateTime >= 1000) {
+        setFps(Math.round(frameCount * 1000 / (currentTime - fpsUpdateTime)));
+        frameCount = 0;
+        fpsUpdateTime = currentTime;
+      }
+      
+      lastTime = currentTime;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
       ctx.lineWidth = 1;
@@ -364,7 +379,21 @@ const Index = () => {
         >
           {isOptimized ? '🐌' : '⚡'}
         </button>
+        <button 
+          onClick={() => setShowFPS(!showFPS)}
+          className="text-white text-2xl hover:scale-110 transition-transform"
+        >
+          📊
+        </button>
       </div>
+
+      {showFPS && (
+        <div className="absolute top-8 right-8 z-20 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
+          <p className="text-green-400 text-sm font-mono font-bold">
+            FPS: {fps}
+          </p>
+        </div>
+      )}
 
       {isAboutOpen && (
         <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-20 bg-black/90 backdrop-blur-sm rounded-lg p-6 max-w-md drop-shadow-2xl">
