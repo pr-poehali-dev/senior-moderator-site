@@ -218,7 +218,7 @@ const Index = () => {
             fontSize: `${Math.random() * 10 + 10}px`,
           }}
         >
-          💀
+          🎄
         </div>
       ))}
 
@@ -364,7 +364,7 @@ const Index = () => {
           onClick={() => setShowSnowflakes(!showSnowflakes)}
           className="text-white text-2xl hover:scale-110 transition-transform"
         >
-          {showSnowflakes ? '💀' : '🚫'}
+          {showSnowflakes ? '🎄' : '🚫'}
         </button>
         <button 
           onClick={() => setIsAboutOpen(!isAboutOpen)}
